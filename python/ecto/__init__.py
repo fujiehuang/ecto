@@ -178,10 +178,10 @@ def postregister(cellname, cpptypename, short_doc, inmodule):
 from ecto.cells import *
 from ecto.ecto_main import *
 
-from doc import *
-from cell import *
-from blackbox import BlackBox, BlackBoxCellInfo, BlackBoxError, BlackBoxForward
-from schedulers import MultiPlasmScheduler
-import test
+#from doc import *
+from ecto.cell import *
+from ecto.blackbox import BlackBox, BlackBoxCellInfo, BlackBoxError, BlackBoxForward
+from ecto.schedulers import MultiPlasmScheduler
+#import test
 
 
