@@ -1,3 +1,26 @@
+Update
+====
+
+this is to adapt the original code to Ubuntu 20.04, where there are a few 
+breaking changes:
+- boost 1.71 (changes to unordered_map, asio, etc)
+- python 3.8
+
+changes to the files:
+- src/lib/util.cpp
+- src/lib/strand.cpp 
+- test/cpp/CMakeLists.txt (disable plasm_loader.cpp)
+- samples/experimental/CMakeLists.txt (disable necto.cpp)
+- python/ecto/__init__.py 
+- python/ecto/opts.py
+- python/ecto/gui.py 
+- python/ecto/doc.py 
+- python/ecto/test.py 
+- python/ecto/sphinx/EctoCellDirective.py
+- python/ecto/sphinx/programout.py
+- python/ecto/impl/view_plasm.py 
+
+
 Ecto
 ====
 Ecto is a hybrid C++/Python development framework for constructing and maintaining

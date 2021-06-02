@@ -35,9 +35,9 @@ def view_plasm(plasm, title):
         try:
             import gtk
             import xdot
-        except ImportError, e:
-            print e
-            print "view_plasm requires gobject gtk graphviz, possibly more to run..."
+        except ImportError as e:
+            print(e)
+            print("view_plasm requires gobject gtk graphviz, possibly more to run...")
             return
         if title is not None:
             # DotWindow doesn't have api for setting the title

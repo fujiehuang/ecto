@@ -115,7 +115,7 @@ def docize(CellType, content):
             if v.has_default:
                 try:
                     default = str(v.val)
-                except TypeError, e:
+                except TypeError:
                     default = '[not visible from python]'
 
             para += [nodes.strong(k, k), nodes.literal('', '   '), 
@@ -137,7 +137,7 @@ def docize(CellType, content):
                     for thevalue, thename in v.val.values.iteritems():
                         valpara += nodes.literal('', "%s (%d)   " % (str(thename), thevalue))
                     para += valpara
-            except TypeError, e:
+            except TypeError:
                 pass # didn't convert to python, but okay. maybe v.val was boost::posix_time::ptime or something.
         
 

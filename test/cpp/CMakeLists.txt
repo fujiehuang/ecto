@@ -60,13 +60,14 @@ target_link_libraries(ecto-test
 )
 
 # This is actually used in the plasm loader Python test file
-add_executable(plasm_loader
-  plasm_loader.cpp
-)
+#add_executable(plasm_loader
+#  plasm_loader.cpp
+#)
 
-target_link_libraries(plasm_loader
-  ecto
-  ${Boost_LIBRARIES}
-  ${catkin_LIBRARIES}
-  ${CMAKE_THREAD_LIBS_INIT}
-)
+#target_link_libraries(plasm_loader
+#  ecto
+#  ${Boost_LIBRARIES}
+#  ${catkin_LIBRARIES}
+#  ${CMAKE_THREAD_LIBS_INIT}
+#  ${PYTHON_LIBRARIES}
+#)

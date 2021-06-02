@@ -38,7 +38,7 @@ namespace ecto {
 
   struct strand::impl : boost::noncopyable
   {
-    boost::scoped_ptr<boost::asio::io_service::strand> asio_strand_p;
+    boost::scoped_ptr<boost::asio::io_context::strand> asio_strand_p;
   };
 
   strand::strand() : impl_(new impl)
@@ -71,7 +71,7 @@ namespace ecto {
     return s.id();
   }
 
-  void on_strand(cell_ptr c, boost::asio::io_service& serv, boost::function<void()> h)
+  void on_strand(cell_ptr c, boost::asio::io_context& serv, boost::function<void()> h)
   {
     ECTO_LOG_DEBUG("on_strand %s, serv=%p", c->name() % &serv);
     if (c->strand_) {
@@ -81,9 +81,9 @@ namespace ecto {
       //      const ecto::strand& skey = *(c->strand_);
       //      ECTO_LOG_DEBUG("skey @ %p", &skey);
       //      boost::shared_ptr<boost::asio::io_service::strand>& strand_p = l.value[skey];
-      boost::scoped_ptr<boost::asio::io_service::strand>& thestrand = c->strand_->impl_->asio_strand_p;
+      boost::scoped_ptr<boost::asio::io_context::strand>& thestrand = c->strand_->impl_->asio_strand_p;
       if (!thestrand) {
-          thestrand.reset(new boost::asio::io_service::strand(serv));
+          thestrand.reset(new boost::asio::io_context::strand(serv));
           ECTO_LOG_DEBUG("%s: Allocated new asio::strand @ %p assoc with serv @ %p",
                          c->name() % thestrand.get() % &thestrand->get_io_service());
         }
@@ -92,7 +92,7 @@ namespace ecto {
 #if !defined(NDEBUG)
 
           //home/ecto_ws/recognition_kitchen/ecto/src/lib/strand.cpp:88: error: unused variable ‘serv_inside_strand’
-          boost::asio::io_service& serv_inside_strand = thestrand->get_io_service();
+          boost::asio::io_context& serv_inside_strand = thestrand->context();
           ECTO_LOG_DEBUG("strand matches, %p ??? %p", &serv_inside_strand % &serv);
           ECTO_ASSERT(&serv_inside_strand == &serv,
                       "Hmm, this strand thinks it should be on a different io_service");

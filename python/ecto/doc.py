@@ -41,17 +41,17 @@ def print_tendrils(tendril, n):
     for x in tendril :
         #print "here"
         value = str(x.data().get())
-        print  " - " + x.key() + " [%s]" % x.data().type_name + " default = %s" % value
-        print  ""
+        print(" - " + x.key() + " [%s]" % x.data().type_name + " default = %s" % value)
+        print("")
         docstr = str(x.data().doc)
         doclines = docstr.splitlines()
         if doclines :
             for docline in doclines:
-                print  "    " + docline
-        print  ""
+                print("    " + docline)
+        print("")
 
 def print_module_doc(m):
-    print m.__doc__
+    print(m.__doc__)
 
 def list_all_cells(pymodule):
     '''

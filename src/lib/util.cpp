@@ -27,7 +27,8 @@
 // 
 #include <vector>
 #include <iostream>
-#include <boost/tr1/unordered_map.hpp>
+//#include <boost/tr1/unordered_map.hpp>
+#include <unordered_map>
 #include <ecto/util.hpp>
 #include <ecto/except.hpp>
 #if !defined(_WIN32)
@@ -130,7 +131,7 @@ namespace ecto
   private:
     type_mapping() { }
     
-    typedef std::tr1::unordered_map<std::string, std::string> dict_t;
+    typedef std::unordered_map<std::string, std::string> dict_t;
     dict_t m;
   };
 

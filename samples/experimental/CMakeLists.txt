@@ -28,5 +28,5 @@
 include_directories(${ecto_SOURCE_DIR}/src/lib)
 ectomodule(ecto_X DESTINATION ecto INSTALL
     executioner.cpp
-    necto.cpp
+   # necto.cpp
 )

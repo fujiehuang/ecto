@@ -73,7 +73,7 @@ def cellinit(cpptype):
         try:
             self.__impl.verify_params()
         except ecto.EctoException as e:
-            print >>sys.stderr, cpptype
+            print(cpptype, file=sys.stderr)
             raise type(e)('\nCell Type: %s\nCell Name: %s\nWhat:\n%s'%(cpptype,self.__impl.name(),str(e)))
     # self.params.get('k') = v
     return impl
@@ -83,7 +83,7 @@ def cell_print_tendrils(tendril):
     for x in tendril:
         try:
             value = str(x.data().get())
-        except TypeError, e:
+        except TypeError:
             value = "[unprintable]"
         s += " - " + x.key() + " [%s]" % x.data().type_name
         if x.data().required:

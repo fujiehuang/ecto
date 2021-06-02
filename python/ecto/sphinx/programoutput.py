@@ -155,13 +155,13 @@ class ProgramOutputCache(defaultdict):
         fullpath = full_executable_path(bin_name, path)
         cmd = fullpath + " " + args
 
-        print "program-output about to run "+ cmd
+        print("program-output about to run "+ cmd)
         proc = Popen(cmd, shell=shell, stdout=PIPE, stderr=PIPE if hide_stderr else STDOUT)
         stdout = proc.communicate()[0].decode(sys.getfilesystemencoding()).rstrip()
 
         if proc.returncode != 0 and (not expect_error):
-            print "Unable to run '" + cmd + "' returned " + str(proc.returncode)\
-                + 'stdout: ' + stdout
+            print("Unable to run '" + cmd + "' returned " + str(proc.returncode)\
+                + 'stdout: ' + stdout)
             raise CalledProcessError
         self[key] = stdout
         return stdout

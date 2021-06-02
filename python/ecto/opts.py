@@ -46,8 +46,8 @@ def use_ipython(options, sched, plasm, locals={}):
         vars()[key] = val
 
     sched.prepare_jobs(options.niter)
-    print "Scheduler ready to run. To execute for some number of microseconds, type:"
-    print "sched.run(1000)"
+    print("Scheduler ready to run. To execute for some number of microseconds, type:")
+    print("sched.run(1000)")
 
     import IPython
     if IPython.__version__ < '0.11':
@@ -84,7 +84,7 @@ def run_plasm(options, plasm, locals={}):
         else:
             sched.execute(options.niter)
     if options.stats:
-        print sched.stats()
+        print(sched.stats())
 
 class CellFactory(object):
     '''A factory for cells that are created from command line args.'''
@@ -313,7 +313,7 @@ if __name__ == '__main__':
     c = const_factory(options)
     m = multiply_factory(options)
     cyaml = CellYamlFactory(c, 'const')
-    print cyaml.dump()
+    print(cyaml.dump())
     c = cyaml.load(yaml.load(cyaml.dump()))
     pr = ecto_test.Printer()
     plasm = ecto.Plasm()
