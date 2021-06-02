@@ -7,10 +7,10 @@ breaking changes:
 - python 3.8
 
 changes to the files:
-- src/lib/util.cpp
-- src/lib/strand.cpp 
-- test/cpp/CMakeLists.txt (disable plasm_loader.cpp)
-- samples/experimental/CMakeLists.txt (disable necto.cpp)
+
+- src/lib/util.cpp     (unordered_map)
+- src/lib/strand.cpp   (asio)
+- include/ecto/python/streambuf.hpp (python string, changed in 3)
 - python/ecto/__init__.py 
 - python/ecto/opts.py
 - python/ecto/gui.py 
@@ -19,6 +19,11 @@ changes to the files:
 - python/ecto/sphinx/EctoCellDirective.py
 - python/ecto/sphinx/programout.py
 - python/ecto/impl/view_plasm.py 
+- CMakeLists.txt (doc and test disabled)
+- test/cpp/CMakeLists.txt (disable plasm_loader.cpp)
+- samples/experimental/CMakeLists.txt (disable necto.cpp)
+
+export PYTHONPATH=/usr/local/lib/python3/dist-packages:$PYTHONPATH
 
 
 Ecto
