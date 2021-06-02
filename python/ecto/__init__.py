@@ -59,7 +59,7 @@ def cellinit(cpptype):
         self.inputs = c.inputs
         self.outputs = c.outputs
         self.params = c.params
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             if k == 'strand':
                 self.__impl._set_strand(v)
             elif k == "connected_inputs_only":
