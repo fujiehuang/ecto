@@ -44,7 +44,7 @@ macro(ecto_find_sphinx)
   find_program(SPHINX_BUILD sphinx-build)
   if(SPHINX_BUILD)
     set(REQUIRED_SPHINX_VERSION "1.0.7")
-    execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "import sphinx;print sphinx.__version__"
+    execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "import sphinx; print(sphinx.__version__)"
       OUTPUT_VARIABLE SPHINX_VERSION
       OUTPUT_STRIP_TRAILING_WHITESPACE
       )
