@@ -88,28 +88,28 @@ add_subdirectory(cmake)
 set(ecto_SPHINX_DIR ${CMAKE_CURRENT_SOURCE_DIR}/python/ecto/sphinx)
 ecto_sphinx(${CMAKE_CURRENT_SOURCE_DIR}/doc/kitchen)
 
-# option(BUILD_DOC "Build docs, this will build tests and samples as well." OFF)
-# if(BUILD_DOC)
-#   set(CATKIN_ENABLE_TESTING ON CACHE BOOL "Tests must be built if docs are expected to build." FORCE)
-#   set(BUILD_SAMPLES ON CACHE BOOL "Samples must be built if docs are expected to build." FORCE)
-#   add_subdirectory(doc)
-# #  find_package(catkin-sphinx QUIET)
-#   if (catkin-sphinx_FOUND)
-#       catkin_sphinx(${CMAKE_CURRENT_SOURCE_DIR}/doc/source doc
-#               ${CMAKE_CURRENT_SOURCE_DIR}
-#               ${CMAKE_CURRENT_SOURCE_DIR}/samples
-#       )
-#   endif()
-# endif()
+option(BUILD_DOC "Build docs, this will build tests and samples as well." ON)
+if(BUILD_DOC)
+   set(CATKIN_ENABLE_TESTING ON CACHE BOOL "Tests must be built if docs are expected to build." FORCE)
+   set(BUILD_SAMPLES ON CACHE BOOL "Samples must be built if docs are expected to build." FORCE)
+   add_subdirectory(doc)
+   find_package(catkin-sphinx QUIET)
+   if (catkin-sphinx_FOUND)
+       catkin_sphinx(${CMAKE_CURRENT_SOURCE_DIR}/doc/source doc
+               ${CMAKE_CURRENT_SOURCE_DIR}
+               ${CMAKE_CURRENT_SOURCE_DIR}/samples
+       )
+   endif()
+ endif()
 
-# if(CATKIN_ENABLE_TESTING)
-#   add_subdirectory(test)
-# endif()
+ if(CATKIN_ENABLE_TESTING)
+   add_subdirectory(test)
+ endif()
 
-# option(BUILD_SAMPLES "Build samples." OFF)
-# if(BUILD_SAMPLES)
-#   add_subdirectory(samples)
-# endif()
+ option(BUILD_SAMPLES "Build samples." OFF)
+ if(BUILD_SAMPLES)
+   add_subdirectory(samples)
+ endif()
 
 # deal with doxygen and integration with sphinx
 catkin_doxygen(ecto-doxygen "${CMAKE_CURRENT_SOURCE_DIR}/include;${CMAKE_CURRENT_SOURCE_DIR}/doc/doxygen")
