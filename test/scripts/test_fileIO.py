@@ -29,10 +29,10 @@
 
 import ecto
 import ecto.ecto_test as ecto_test
-import StringIO
+import io
 
 cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-filetext = '\n'.join([str(x) for x in cards]) + '\n'
+filetext = bytes('\n'.join([str(x) for x in cards]) + '\n', 'utf-8')
 def test_fileO(Scheduler, file_like_object, realfile=False):
     global cards, filetext
     plasm = ecto.Plasm()
@@ -44,15 +44,16 @@ def test_fileO(Scheduler, file_like_object, realfile=False):
 
     if not realfile:
         file_like_object.seek(0)
-        result = ''.join([x for x in file_like_object])
-        print result
+        result = bytes(''.join([x for x in file_like_object]), 'utf-8')
+        print(result)
         assert result == filetext
 
 def test_fileI(Scheduler, file_like_object, realfile=False):
     global cards
     plasm = ecto.Plasm()
     if not realfile:
-        file_like_object.writelines(filetext)
+        #file_like_object.writelines(filetext)
+        file_like_object.write(filetext)
         file_like_object.seek(0)
     reader = ecto_test.FileI(file=ecto.istream(file_like_object))
     printer = ecto_test.Printer()
@@ -62,15 +63,18 @@ def test_fileI(Scheduler, file_like_object, realfile=False):
     assert reader.outputs.output == cards[-1]
 
 def test_io_fake(Scheduler):
-    outty = StringIO.StringIO()
+    outty = io.StringIO()
     test_fileO(Scheduler, outty)
-    inny = StringIO.StringIO()
+
+    #inny = io.StringIO()
+    inny = io.BytesIO()
     test_fileI(Scheduler, inny)
 
 def test_io_real(Scheduler):
     with open('cards.txt', 'w') as f:
+        print(type(f))
         test_fileO(Scheduler, f, realfile=True)
-    with open('cards.txt', 'r') as f:
+    with open('cards.txt', 'rb') as f:
         test_fileI(Scheduler, f, realfile=True)
     import os
     os.remove('cards.txt')
@@ -81,10 +85,10 @@ def test_io_stdo(Scheduler=ecto.Scheduler):
 
 if __name__ == '__main__':
     for x in [ecto.Scheduler]:
-        print " >>>>>>>>> Start sched >>>>>>>>>>", str(x)
+        print((" >>>>>>>>> Start sched >>>>>>>>>>", str(x)))
         test_io_fake(x)
         test_io_real(x)
         test_io_stdo(x)
-        print "<<<<<<<<<< End sched <<<<<<<<<<<", str(x)
+        print(("<<<<<<<<<< End sched <<<<<<<<<<<", str(x)))
 
 
