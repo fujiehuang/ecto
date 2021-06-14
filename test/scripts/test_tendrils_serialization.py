@@ -6,7 +6,7 @@
 import ecto
 from ecto import ecto_test
 import math
-from cStringIO import StringIO
+from io import StringIO
 def test_tendrils_serialization():
     t = ecto.Tendrils()
     t.declare("Hello",ecto.Tendril.createT('std::string'))
@@ -22,9 +22,9 @@ def test_tendrils_serialization():
 
     t_ds = ecto.Tendrils()
     t_ds.load(ecto.istream(ifs))
-    print 'loaded:'
-    for key, val in t_ds.iteritems():
-        print key, val.val
+    print('loaded:')
+    for key, val in t_ds.items():
+        print(key, val.val)
     assert t_ds.Woot == math.pi
     assert t_ds.Hello == 'World'
 if __name__ == '__main__':

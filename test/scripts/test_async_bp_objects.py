@@ -33,55 +33,53 @@ import random
 
 def makeplasm():
     plasm = ecto.Plasm()
-
     ping = ecto_test.Ping("Ping")
-    sleep0 = ecto_test.SleepPyObjectAbuser(list_o_sleeps=[random.random() * 0.1 for i in range(1,10)])
-    sleep1 = ecto_test.SleepPyObjectAbuser(list_o_sleeps=[random.random() * 0.1 for i in range(1,10)])
-
-    plasm.connect(ping[:] >> sleep0[:],
-                  sleep0[:] >> sleep1[:])
-
+    sleep0 = ecto_test.SleepPyObjectAbuser(\
+        list_o_sleeps = [random.random() * 0.1 for i in range(1,10)])
+    sleep1 = ecto_test.SleepPyObjectAbuser(\
+        list_o_sleeps = [random.random() * 0.1 for i in range(1,10)])
+    plasm.connect(ping[:] >> sleep0[:], sleep0[:] >> sleep1[:])
     return plasm
 
-def async(s):
-    print "s.prepare_jobs"
+def f_async(s):
+    print("s.prepare_jobs")
     s.prepare_jobs(niter=5)
     assert s.running()
 
-def sync(s):
-    print "s.execute"
+def f_sync(s):
+    print("s.execute")
     s.execute(niter=5)
     assert s.running()
 
 def nada(s):
-    print "nada"
+    print("nada")
 
 def waitonly(s):
-    print "waitonly"
+    print("waitonly")
     s.run()
     assert s.running()
-    print "wait DONE"
+    print("wait DONE")
 
 def tpool(Scheduler, go, afterwards, sleepdur=0.1):
-    print "*"*80
-    print Scheduler, go, afterwards, sleepdur
+    print(("*"*80))
+    print((Scheduler, go, afterwards, sleepdur))
     p = makeplasm()
     s = Scheduler(p)
     go(s)
     #this is where it fails.
     #bp::stl_input_iterator<double> begin(list_o_sleeps),end;
-    print "time.sleep(", sleepdur, ")"
+    print(("time.sleep(", sleepdur, ")"))
     stime = time.time()
     time.sleep(sleepdur)
     afterwards(s)
     etime = time.time()
-    print "elapsed", etime-stime
+    print(("elapsed", etime-stime))
 
 def doemall(Sched):
-    tpool(Sched, sync, nada)
-    tpool(Sched, sync, waitonly)
-    tpool(Sched, async, waitonly)
-    tpool(Sched, async, nada)
+    tpool(Sched, f_sync, nada)
+    tpool(Sched, f_sync, waitonly)
+    tpool(Sched, f_async, waitonly)
+    tpool(Sched, f_async, nada)
 
 doemall(ecto.Scheduler)
 

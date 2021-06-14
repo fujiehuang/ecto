@@ -30,8 +30,8 @@ import ecto
 import ecto.ecto_test as ecto_test
 import ecto.cells
 
-print ecto_test.Add.__module__
-print ecto.If.__module__
+print((ecto_test.Add.__module__))
+print((ecto.If.__module__))
 assert ecto.If.__module__ == 'ecto.cells'
 assert ecto_test.Add.__module__ == 'ecto.ecto_test'
 

@@ -31,7 +31,7 @@ import ecto.ecto_test as ecto_test
 from util import fail
 import sys, time
 
-print "Hardware concurrency is", ecto.hardware_concurrency()
+print(("Hardware concurrency is", ecto.hardware_concurrency()))
 
 eps = 0.05
 
@@ -49,22 +49,22 @@ def makeplasm():
 def do_test(fn):
     def impl(Sched):
         times = { ecto.Scheduler : 1.0 }
-        print "*"*80, "\n", fn.__name__, Sched.__name__
+        print(("*"*80, "\n", fn.__name__, Sched.__name__))
         p = makeplasm()
         s = Sched(p)
         t = times[Sched]
-        print "Expecting finish in", t, "seconds"
+        print(("Expecting finish in", t, "seconds"))
         fn(s, times[Sched])
-    map(impl, [ecto.Scheduler])
+    list(map(impl, [ecto.Scheduler]))
 
 
 def sync(s, ex):
     assert not s.running()
     t = time.time()
-    print "starting"
+    print("starting")
     s.execute(niter=5)
     dur = time.time() - t
-    print "done after", dur
+    print(("done after", dur))
     assert dur > ex
     assert dur < (ex + eps)
     assert s.running()
@@ -73,16 +73,16 @@ def sync(s, ex):
 def synctwice(s, ex):
     assert not s.running()
     start_t = time.time()
-    print "starting", ex
+    print(("starting", ex))
     s.execute(niter=5)
     dur = time.time() - start_t
-    print "HALFWAY:", dur
+    print(("HALFWAY:", dur))
     assert dur > ex
     assert dur < ex + eps
     assert s.running()
     s.execute(niter=5)
     dur = time.time() - start_t
-    print "SECONDTIME:", dur
+    print(("SECONDTIME:", dur))
     assert dur > (ex*2)
     assert dur < ((ex*2) + eps)
     assert s.running()
@@ -90,19 +90,19 @@ def synctwice(s, ex):
 def ex_async_twice(s, ex):
     assert not s.running()
     s.prepare_jobs(niter=5)
-    print "once..."
+    print("once...")
     assert s.running()
     t = time.time()
     try:
-        print "twice..."
+        print("twice...")
         s.prepare_jobs(niter=5)
         fail("that should have thrown")
-    except ecto.EctoException, e:
-        print "okay, threw"
-        print "whee"
+    except ecto.EctoException as e:
+        print("okay, threw")
+        print("whee")
     s.run()
     elapsed = time.time() - t
-    print "elapsed:", elapsed, "expected:", ex
+    print(("elapsed:", elapsed, "expected:", ex))
     assert elapsed > ex
     assert elapsed < (ex + eps)
 
@@ -110,19 +110,19 @@ def ex_async_twice(s, ex):
 def ex_async_then_sync_throws(s, ex):
     assert not s.running()
     s.prepare_jobs(niter=5)
-    print "once..."
+    print("once...")
     assert s.running()
     t = time.time()
     try:
-        print "twice..."
+        print("twice...")
         s.execute(niter=5)
         fail("that should have thrown")
-    except ecto.EctoException, e:
-        print "okay, threw"
-        print "whee"
+    except ecto.EctoException as e:
+        print("okay, threw")
+        print("whee")
     s.run()
     elapsed = time.time() - t
-    print "elapsed:", elapsed, "expected:", ex
+    print(("elapsed:", elapsed, "expected:", ex))
     assert elapsed > ex
     assert elapsed < (ex + eps)
 
@@ -133,7 +133,7 @@ def wait_on_nothing(s, ex):
     s.run()
     assert not s.running()
     etime = time.time()
-    print etime-stime
+    print((etime-stime))
     assert eps > etime-stime
 
 
@@ -146,13 +146,13 @@ def running_check(s, ex):
 
 
 def wait_check(s, ex):
-    print __name__, s
+    print((__name__, s))
     assert not s.running()
     t = time.time()
     s.prepare_jobs(niter=5)
     assert time.time() - t < ex
     s.run()
-    print time.time() - t > ex+eps  # we might be multithreaded
+    print((time.time() - t > ex+eps))  # we might be multithreaded
     assert s.running()
 
 do_test(wait_on_nothing)
@@ -220,7 +220,7 @@ def stoppable():
                   for x in range(20)]
         plasm.connect(ping[:] >> sleeps[0][:])
         for i in range(1,19):
-            print "i=", i
+            print(("i=", i))
             plasm.connect(sleeps[i][:] >> sleeps[i+1][:])
         return plasm
 
@@ -231,7 +231,7 @@ def stoppable():
     start = time.time()
     st.execute(1)
     elapsed = time.time() - start
-    print "elapsed Scheduler:", elapsed
+    print(("elapsed Scheduler:", elapsed))
     assert elapsed > 2.0
     assert elapsed < 2.1
     assert st.running()
@@ -240,7 +240,7 @@ def stoppable():
     st.prepare_jobs(1)
     st.run()
     elapsed = time.time() - start
-    print "elapsed Scheduler:", elapsed
+    print(("elapsed Scheduler:", elapsed))
     assert elapsed > 2.0
     assert elapsed < 2.1
 

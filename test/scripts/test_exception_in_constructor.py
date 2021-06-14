@@ -38,8 +38,8 @@ sched = ecto.Scheduler(plasm)
 
 try:
     sched.execute(1)
-except ecto.CellException, e:
-    print "except!\n", e
+except ecto.CellException as e:
+    print(("except!\n", e))
     assert re.findall("what.*I hate life.", str(e))
     assert re.findall("when.*Construction", str(e))
     assert re.findall("type.*std::logic_error", str(e))

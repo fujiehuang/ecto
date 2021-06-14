@@ -42,11 +42,11 @@ class MyModule(ecto.Cell):
         outputs.declare("out", "i'll give you this", "hello")
     
     def configure(self,params, inputs, outputs):
-        print "configure!"
+        print("configure!")
         self.text = params.text
 
     def process(self,inputs, outputs):
-        print "process!"
+        print("process!")
         c = int(inputs.input)
         outputs.out = c * self.text
         return 0

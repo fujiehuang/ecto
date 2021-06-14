@@ -39,7 +39,7 @@ def test_dual_line_plasm(nlevels):
     plasm.connect(gen, "out", incr, "in")
 
     for j in range(nlevels-1): # one set of incs has already been added
-        print j
+        print(j)
         inc_nextl, inc_nextr = ecto_test.Increment(), ecto_test.Increment()
         plasm.connect(incl, "out", inc_nextl, "in")
         plasm.connect(incr, "out", inc_nextr, "in")
@@ -54,17 +54,17 @@ def test_dual_line_plasm(nlevels):
     sched = ecto.Scheduler(plasm)
     sched.execute(niter=1)
     result = add.outputs.out
-    print "result=", result
+    print(("result=", result))
     assert(result == nlevels * 2)
 
     sched.execute(niter=2)
     result = add.outputs.out
-    print "iter2 result=", result
+    print(("iter2 result=", result))
     assert result == (nlevels + 2) * 2
 
     sched.execute(niter=3)
     result = add.outputs.out
-    print "iter3 result=", result
+    print(("iter3 result=", result))
     assert result == (nlevels + 5) * 2
 
 if __name__ == '__main__':

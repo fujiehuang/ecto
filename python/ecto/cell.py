@@ -50,7 +50,7 @@ class Cell(_cell_base):
 
         _cell_base.declare_params(self)
 
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             self.params.at(k).set(v)
         self.params.notify()
         _cell_base.declare_io(self)

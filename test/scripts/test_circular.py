@@ -15,9 +15,9 @@ def test_circular():
         sched.execute(niter=1)
         fail("that should have thrown")
     except ecto.EctoException as e: # Thrown when Lumberg's "BFS" is used.
-        print "okay, threw"
+        print("okay, threw")
     except ValueError as e: # Thrown when boost::topological_sort() is used.
-        print "okay, threw"
+        print("okay, threw")
 
 if __name__ == '__main__':
     test_circular()

@@ -40,7 +40,7 @@ def test_nodelay():
     
     sched = ecto.Scheduler(plasm)
     sched.execute(niter=10000)
-    print "Hz:", metrics.outputs.hz, " Latency in seconds: %f" % metrics.outputs.latency_seconds
+    print(("Hz:", metrics.outputs.hz, " Latency in seconds: %f" % metrics.outputs.latency_seconds))
 
     # these are kinda loose
     assert metrics.outputs.hz > 5000
@@ -57,7 +57,7 @@ def test_20hz():
     
     sched = ecto.Scheduler(plasm)
     sched.execute(niter=100)
-    print "Hz:", metrics.outputs.hz, " Latency in seconds: %f" % metrics.outputs.latency_seconds
+    print(("Hz:", metrics.outputs.hz, " Latency in seconds: %f" % metrics.outputs.latency_seconds))
 
     # these are kinda loose
     assert 19 < metrics.outputs.hz < 21
@@ -92,7 +92,7 @@ def test_st(niter, n_nodes):
 
     sched = ecto.Scheduler(plasm)
     sched.execute(niter)
-    print "Hz:", metrics.outputs.hz, " Latency in seconds:", metrics.outputs.latency_seconds
+    print(("Hz:", metrics.outputs.hz, " Latency in seconds:", metrics.outputs.latency_seconds))
     assert 0.95 < metrics.outputs.hz < 1.05
     assert 0.95 < metrics.outputs.latency_seconds < 1.05
 
@@ -108,7 +108,7 @@ def test_tp(niter, n_nodes):
 
     sched = ecto.Scheduler(plasm)
     sched.execute(niter=niter)
-    print "Hz:", metrics.outputs.hz, " Latency in seconds:", metrics.outputs.latency_seconds
+    print(("Hz:", metrics.outputs.hz, " Latency in seconds:", metrics.outputs.latency_seconds))
     # FIXME: (JTF) This assert doesn't seem right - changing it for now.
     #assert n_nodes * 0.95 < metrics.outputs.hz < n_nodes * 1.05
     assert 0.95 < metrics.outputs.hz < 1.05

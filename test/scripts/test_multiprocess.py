@@ -31,7 +31,7 @@ import ecto
 import os
 import sys
 from multiprocessing import Process, Pipe, current_process, freeze_support
-import StringIO
+import io
 
 #http://docs.python.org/library/multiprocessing.html
 
@@ -40,7 +40,7 @@ class Sender(ecto.Cell):
     @staticmethod
     def declare_params(params):
         params.declare("conn", "A pipe connection.", None)
-        params.declare("file", "A file-like object.", StringIO.StringIO())
+        params.declare("file", "A file-like object.", io.StringIO())
 
     @staticmethod
     def declare_io(params, inputs, outputs):
@@ -51,7 +51,7 @@ class Sender(ecto.Cell):
         pass
 
     def process(self, inputs, outputs):
-        f = StringIO.StringIO()
+        f = io.StringIO()
         f.write('hello there')
         f.seek(0)
         self.params.conn.send(f)
@@ -68,7 +68,7 @@ def g(conn):
     while True:
         file = conn.recv()
         for x in file:
-            print x
+            print(x)
             assert x == 'hello there'
 
 if __name__ == '__main__':

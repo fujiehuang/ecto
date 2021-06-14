@@ -81,7 +81,7 @@ def test_bb(options):
 
 def test_bb_fail(options):
     mm = MyBlackBox("MaMaMa", start=10, step=3, fail=True)
-    print mm.__doc__
+    print((mm.__doc__))
     assert 'fail' in  mm.__doc__
     assert mm.name() == 'MaMaMa'
     plasm = ecto.Plasm()
@@ -89,9 +89,9 @@ def test_bb_fail(options):
     try:
         run_plasm(options, plasm)
         fail()
-    except ecto.CellException, e:
-        print "Good:"
-        print str(e)
+    except ecto.CellException as e:
+        print("Good:")
+        print((str(e)))
         assert "I hate life" in str(e)
 
 def test_command_line_args():
@@ -117,7 +117,7 @@ def test_yaml():
     bb_yaml = CellYamlFactory(MyBlackBox(start=54), 'bb')
     bb_yaml.dump(sys.stdout)
     mm = bb_yaml.load(yaml.load(bb_yaml.dump()), 'bb')
-    print mm.params.start
+    print((mm.params.start))
     assert mm.params.start == 54
 
 class MyBlackBox2(ecto.BlackBox):
@@ -221,8 +221,8 @@ def test_bb_static():
             mm = BB("MaMaMa")
             fail()
         except ecto.BlackBoxError as e:
-            print "Good:"
-            print str(e)
+            print("Good:")
+            print((str(e)))
 
 if __name__ == '__main__':
     test_command_line_args()

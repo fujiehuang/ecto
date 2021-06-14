@@ -60,7 +60,7 @@ def makeplasm(N):
 
 
 def do_one_impl(SchedType, countto, nthreads, niter):
-    print "*"*80, "\n", SchedType, "test w/ quit after", countto, " nthreads=", nthreads, "niter=", niter
+    print("*"*80, "\n", SchedType, "test w/ quit after", countto, " nthreads=", nthreads, "niter=", niter)
     (quitter, gen, plasm) = makeplasm(countto)
 
     sched = SchedType(plasm)
@@ -68,14 +68,14 @@ def do_one_impl(SchedType, countto, nthreads, niter):
     quitout = countto
     for j in range(niter):
         sched.execute(niter=countto+100)
-        print sched.stats()
-        print "j:", j
-        print "niter:", countto+100
-        print "countto:", countto
-        print "nthreads:", nthreads
-        print "quitter.out: ", quitter.outputs.out
-        print "gen.out: ", gen.outputs.out
-        print "quitout:", quitout
+        print(sched.stats())
+        print("j:", j)
+        print("niter:", countto+100)
+        print("countto:", countto)
+        print("nthreads:", nthreads)
+        print("quitter.out: ", quitter.outputs.out)
+        print("gen.out: ", gen.outputs.out)
+        print("quitout:", quitout)
         assert quitter.outputs.out == quitout
         quitout += countto + 1 # because the gen will have fired an unused value
             # assert gen.outputs.out == countto + dist

@@ -36,9 +36,9 @@ def test_modules_01():
     g.process()
     assert g.outputs.out == 2
     g.configure()
-    print type(g.outputs)
-    print type(g.outputs.out)
-    print g.outputs.out
+    print((type(g.outputs)))
+    print((type(g.outputs.out)))
+    print((g.outputs.out))
     g.outputs.out = 7.0
     g.process()
     assert  g.outputs.out == 9
@@ -46,7 +46,7 @@ def test_modules_01():
     s.process()
     assert(len(s.outputs) == 4)
     for out in s.outputs:
-        print out[1].val
+        print((out[1].val))
         assert(out[1].val == 3)
 
 def test_modules_spec():
@@ -56,30 +56,30 @@ def test_modules_spec():
     try:
         x = g[2.0]
         util.fail()
-    except TypeError, e:
-        print e
+    except TypeError as e:
+        print(e)
     try:
         x = g["out",2.0]
         util.fail()
-    except RuntimeError, e:
-        print e
+    except RuntimeError as e:
+        print(e)
     try:
         x = g["out","and","about"]
         util.fail()
-    except RuntimeError, e:
-        print e
+    except RuntimeError as e:
+        print(e)
     
     scatter = ecto_test.Scatter(n=3, x=3)
     gather = ecto_test.Gather(n=3)
-    a = scatter[scatter.outputs.keys()]
-    b = gather[gather.inputs.keys()]
-    print a,b
-    print a >> b
+    a = scatter[list(scatter.outputs.keys())]
+    b = gather[list(gather.inputs.keys())]
+    print((a,b))
+    print((a >> b))
     plasm = ecto.Plasm()
     plasm.connect(a>>b)
     plasm.execute(1)
     result = gather.outputs.out
-    print result
+    print(result)
     assert(result == 9) # 3 * 3
     
     connections = scatter[:] >> gather[:]
@@ -87,8 +87,8 @@ def test_modules_spec():
     try:
         scatter[1:-1]
         util.fail()
-    except RuntimeError,e:
-        print e
+    except RuntimeError as e:
+        print(e)
         
 
 def noarg(x):
@@ -104,7 +104,7 @@ def right_type(g):
 
 def already_set(g):
     g.outputs.declare("out","doc","str")
-    print g.outputs.out
+    print((g.outputs.out))
 
 def novel_sets(g):
     g.outputs.declare("out2","doc",1.0)
@@ -117,8 +117,8 @@ def do_fail(x,exception_type = RuntimeError ,args = None):
     try:
         x(args)
         util.fail()
-    except exception_type,e:
-        print "good, caught error:", e
+    except exception_type as e:
+        print(("good, caught error:", e))
 
         
 def too_many_positionalargs(_):
@@ -127,15 +127,15 @@ def too_many_positionalargs(_):
 def type_and_instance_names():
     m = ecto_test.Generate()
     name = m.name()
-    print "name is:", name
+    print(("name is:", name))
     assert name.startswith("ecto_test::Generate<double>")
 
     t = m.type_name()
-    print "type is:", t
+    print(("type is:", t))
 
     m2 = ecto_test.Generate("user-supplied name")
     assert m2.name() == "user-supplied name"
-    print "m2.type_name =", m2.type_name() 
+    print(("m2.type_name =", m2.type_name())) 
     assert m2.type_name() == "ecto_test::Generate<double>"
     
 def not_allocable():

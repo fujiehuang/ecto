@@ -12,3 +12,4 @@ boost.atomic/
 bgr
 *.dot
 *.svg
+*.bak

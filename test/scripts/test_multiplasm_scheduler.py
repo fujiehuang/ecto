@@ -52,7 +52,7 @@ def build_pipelines():
 def test_plasm():
     (accumulator, scheduler) = build_pipelines()
     scheduler.spin()
-    print( "RESULT: %s" % accumulator.outputs.out)
+    print(( "RESULT: %s" % accumulator.outputs.out))
     assert accumulator.outputs.out == 80.0
 
 if __name__ == '__main__':

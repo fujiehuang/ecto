@@ -43,13 +43,13 @@ multiply_factory = cell_options(parser, ecto_test.Multiply, prefix='mult')
 const_factory = cell_options(parser, ecto.Constant(value=0.50505), prefix='const')
 
 options = parser.parse_args()
-print options.mult_factor
+print((options.mult_factor))
 assert options.mult_factor == 3.14
 c = const_factory(options)
 m = multiply_factory(options)
 
 cyaml = CellYamlFactory(c,'const')
-print cyaml.dump()
+print((cyaml.dump()))
 c = cyaml.load(yaml.load(cyaml.dump()))
 assert c.params.value == 0.50505
 
@@ -61,5 +61,5 @@ plasm.connect(c[:] >> m[:],
 
 run_plasm(options, plasm, locals=vars())
 
-print m.outputs.out
+print((m.outputs.out))
 assert m.outputs.out == 1.585857

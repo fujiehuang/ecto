@@ -42,16 +42,16 @@ def makeplasm(N):
     return plasm
 
 def do_one_impl(Sched, nthreads, niter):
-    print "\n"*5, "*"*80
-    print Sched, nthreads, niter
+    print("\n"*5, "*"*80)
+    print(Sched, nthreads, niter)
     p = makeplasm(niter)
 
     s = Sched(p)
     try:
         s.execute(niter=niter+10)
         assert False, "that should have thrown"
-    except ecto.EctoException, e:
-        print "okay:", e
+    except ecto.EctoException as e:
+        print("okay:", e)
 
 
 def do_one(nthreads, niter):

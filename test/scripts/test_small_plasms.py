@@ -35,17 +35,17 @@ plasm = ecto.Plasm()
 plasm.insert(gen)
 plasm.execute(niter=1)
 result = gen.outputs.out
-print result
+print(result)
 assert(result == 0)
 
 plasm.execute(niter=1)
 result = gen.outputs.out
-print result
+print(result)
 assert(result == 1)
 
 plasm.execute(niter=1)
 result = gen.outputs.out
-print result
+print(result)
 assert(result == 2)
 
 

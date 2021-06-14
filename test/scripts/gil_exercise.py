@@ -35,7 +35,7 @@ n = 0
 def callmeback(x):
     global n
     if n % 100 == 0:
-        print "called back", n, "-th time with", x
+        print("called back", n, "-th time with", x)
     n += 1
     time.sleep((n%10) * 0.001)
     if x not in stuffs:
@@ -50,5 +50,5 @@ ecto_test.call_back_to_python(callmeback)
 stuffs = {}
 ecto_test.thrash_gil(callmeback, 10000)
 
-print "calls per thread:"
+print("calls per thread:")
 pprint.pprint(stuffs)

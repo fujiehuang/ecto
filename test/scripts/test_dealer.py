@@ -32,23 +32,23 @@ import ecto.ecto_test as ecto_test
 import re
 
 def test_dealer(Scheduler):
-    print "*" *80
-    print __name__, 'test_dealer', Scheduler
+    print(("*" *80))
+    print((__name__, 'test_dealer', Scheduler))
     plasm = ecto.Plasm()
     printer = ecto_test.Printer()
     cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     dealer = ecto.Dealer(tendril=printer.inputs.at('in'), iterable=cards)
     plasm.connect(dealer['out'] >> printer['in'])
     sched = Scheduler(plasm)
-    print 'executing ...'
+    print('executing ...')
     sched.execute()
-    print 'finished executing'
+    print('finished executing')
     assert dealer.outputs.at('out').type_name == 'double'
     assert dealer.outputs.out == 10
 
 def test_dealer_heterogenous_type_fail(Scheduler):
-    print "*" * 80
-    print __name__, 'test_dealer_heterogenous_type_fail', Scheduler
+    print(("*" * 80))
+    print((__name__, 'test_dealer_heterogenous_type_fail', Scheduler))
     printer = ecto_test.Printer()
     cards = [1, 2, 3, 4, 5, 'hello', 7, 8, 9, 10]
     dealer = ecto.Dealer(tendril=printer.inputs.at('in'), iterable=cards)
@@ -58,8 +58,8 @@ def test_dealer_heterogenous_type_fail(Scheduler):
     try:
         sched.execute()
         assert False == " Should have thrown."
-    except ecto.FailedFromPythonConversion, e:
-        print "Threw as expected:", str(e)
+    except ecto.FailedFromPythonConversion as e:
+        print(("Threw as expected:", str(e)))
         assert re.findall('cpp_typename.*double', str(e))
 
 if __name__ == '__main__':

@@ -31,10 +31,10 @@ import ecto
 import ecto.ecto_test as ecto_test
 
 def test_constant():
-    print "test running.."
+    print("test running..")
     c = ecto.Constant(value=0.50505)
     m = ecto_test.Multiply(factor=3.3335)
-    print ">>>>DOC>>>>", c.__doc__
+    print((">>>>DOC>>>>", c.__doc__))
     pr = ecto_test.Printer()
     
     plasm = ecto.Plasm()

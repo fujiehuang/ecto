@@ -39,12 +39,12 @@ def test_parameter_callbacks():
     for i in range(0, 5):
         value = handle_holder.params.value * (i + 1);
         handle_holder.params.value = value
-        print "execute..."
+        print("execute...")
         sched.execute(niter=1)
-        print "parameter:", handle_holder.outputs.value
+        print(("parameter:", handle_holder.outputs.value))
 
     result = handle_holder.outputs.output
-    print result
+    print(result)
     assert handle_holder.outputs.value == 240
     assert handle_holder.outputs.output == 1920
 

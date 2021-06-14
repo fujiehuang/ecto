@@ -27,11 +27,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 import ecto
+import ecto.test
 import ecto.ecto_test as ecto_test
 from util import fail
 import sys, time
 
-print "Hardware concurrency is", ecto.hardware_concurrency()
+print("Hardware concurrency is", ecto.hardware_concurrency())
 
 eps = 0.1
 
@@ -47,17 +48,17 @@ def makeplasm():
 
 def do_test(fn):
     def impl(Sched):
-        print "*"*80, "\n", fn.__name__, Sched.__name__
+        print("*"*80, "\n", fn.__name__, Sched.__name__)
         (p, ss) = makeplasm()
         s = Sched(p)
         fn(s, ss)
-    map(impl, [ecto.Scheduler])
+    list(map(impl, [ecto.Scheduler]))
 
 
 def synctwice(s, ss):
 
-    print "*"*80
-    print "\n"*5
+    print("*"*80)
+    print("\n"*5)
     assert ss.outputs.nstart == 0
     assert ss.outputs.nstop == 0
     assert ss.outputs.nconfigure == 0
@@ -68,12 +69,12 @@ def synctwice(s, ss):
     for i in range(iters):
         s.execute(niter=5)
 
-        print "NSTART=", ss.outputs.nstart
+        print("NSTART=", ss.outputs.nstart)
         assert ss.outputs.nstart == 1
-        print "NSTOP=", ss.outputs.nstop
+        print("NSTOP=", ss.outputs.nstop)
         assert ss.outputs.nstop == 0
         assert ss.outputs.nconfigure == 1
-        print "NPROCESS=", ss.outputs.nprocess
+        print("NPROCESS=", ss.outputs.nprocess)
         assert ss.outputs.nprocess == 5*(i+1)
 
     # Test asynchronous execute with no stops.
@@ -81,12 +82,12 @@ def synctwice(s, ss):
         s.prepare_jobs(niter=5)
         s.run()
 
-        print "NSTART=", ss.outputs.nstart
+        print("NSTART=", ss.outputs.nstart)
         assert ss.outputs.nstart == 1
-        print "NSTOP=", ss.outputs.nstop
+        print("NSTOP=", ss.outputs.nstop)
         assert ss.outputs.nstop == 0
         assert ss.outputs.nconfigure == 1
-        print "NPROCESS=", ss.outputs.nprocess
+        print("NPROCESS=", ss.outputs.nprocess)
         assert ss.outputs.nprocess == 5*iters + 5*(i+1)
 
     # Test synchronous execute with stops
@@ -94,12 +95,12 @@ def synctwice(s, ss):
         s.stop()
         s.execute(niter=5)
 
-        print "NSTART=", ss.outputs.nstart
+        print("NSTART=", ss.outputs.nstart)
         assert ss.outputs.nstart == 1 + i + 1
-        print "NSTOP=", ss.outputs.nstop
+        print("NSTOP=", ss.outputs.nstop)
         assert ss.outputs.nstop == i + 1
         assert ss.outputs.nconfigure == 1
-        print "NPROCESS=", ss.outputs.nprocess
+        print("NPROCESS=", ss.outputs.nprocess)
         assert ss.outputs.nprocess == 2*5*iters + 5*(i+1)
 
     # Test asynchronous execute with stops
@@ -108,12 +109,12 @@ def synctwice(s, ss):
         s.prepare_jobs(niter=5)
         s.run()
 
-        print "NSTART=", ss.outputs.nstart
+        print("NSTART=", ss.outputs.nstart)
         assert ss.outputs.nstart == iters + 1 + i + 1
-        print "NSTOP=", ss.outputs.nstop
+        print("NSTOP=", ss.outputs.nstop)
         assert ss.outputs.nstop == iters + i + 1
         assert ss.outputs.nconfigure == 1
-        print "NPROCESS=", ss.outputs.nprocess
+        print("NPROCESS=", ss.outputs.nprocess)
         assert ss.outputs.nprocess == 3*5*iters + 5*(i+1)
 
     # Test partial asynchronous execution
@@ -121,13 +122,13 @@ def synctwice(s, ss):
     for i in range(2): # 2 cell::process() jobs + no execute_init() jobs.
         s.run_job() # Make sure params, etc are initialized, and process() is called once on each cell.
     s.stop()
-    print s.stats(), "\n"*5
-    print "NSTART=", ss.outputs.nstart
+    print(s.stats(), "\n"*5)
+    print("NSTART=", ss.outputs.nstart)
     assert ss.outputs.nstart == 2*iters + 1
-    print "NSTOP=", ss.outputs.nstop
+    print("NSTOP=", ss.outputs.nstop)
     assert ss.outputs.nstop == 2*iters + 1
     assert ss.outputs.nconfigure == 1
-    print "NPROCESS=", ss.outputs.nprocess
+    print("NPROCESS=", ss.outputs.nprocess)
     assert ss.outputs.nprocess == 4*5*iters + 1
 
     s.execute(niter=5)
@@ -146,9 +147,9 @@ for j in range(ecto.test.iterations):
 def things_not_too_slow(s, ss):
     s.prepare_jobs()
     s.stop()
-    print s.stats()
+    print(s.stats())
     s.prepare_jobs()
     s.stop()
-    print s.stats()
+    print(s.stats())
 
 do_test(things_not_too_slow)

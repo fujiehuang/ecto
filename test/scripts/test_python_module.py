@@ -38,12 +38,12 @@ def test_python_module():
     assert mod.text == "spam"
     assert mod.params.text == "spam"
     mod.process(mod.inputs,mod.outputs)
-    print mod.outputs.out
+    print(mod.outputs.out)
     assert mod.outputs.out == "spam"*2
 
 def test_python_module_plasm(Schedtype):
-    print "*"*80
-    print Schedtype
+    print("*"*80)
+    print(Schedtype)
     mod = MyModule(text="spam")
     mod.configure(mod.params, mod.inputs, mod.outputs)
     g = ecto_test.Generate(start = 1 , step =1)
@@ -51,7 +51,7 @@ def test_python_module_plasm(Schedtype):
     plasm.connect(g,"out",mod,"input")
     sched = Schedtype(plasm)
     for i in range(1,5):
-        print "HERE"
+        print("HERE")
         sched.execute(niter=1)
         sched.prepare_jobs(niter=1)
         sched.run()
@@ -66,5 +66,5 @@ def test_python_module_plasm(Schedtype):
 
 if __name__ == '__main__':
     test_python_module()
-    map(test_python_module_plasm, [ecto.Scheduler])
+    list(map(test_python_module_plasm, [ecto.Scheduler]))
 

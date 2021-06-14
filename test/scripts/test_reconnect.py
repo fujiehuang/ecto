@@ -65,7 +65,7 @@ def test_reconnect():
     try:
         plasm.connect(m2,"out",m,"in")
         util.fail("reconnection bad...")
-    except RuntimeError,e:
+    except RuntimeError as e:
         pass
         #print "Reconnect caught: ",e
     plasm.connect(m2, "out", gather , "in_0000")
@@ -73,7 +73,7 @@ def test_reconnect():
     try:
         plasm.connect(m2, "out", gather , "in_0001")
         util.fail()
-    except RuntimeError,e:
+    except RuntimeError as e:
         pass
     plasm.disconnect(m, "out", gather , "in_0001")
     plasm.connect(m, "out", gather , "in_0001")
@@ -82,7 +82,7 @@ def test_reconnect():
     #check some values
     sched = ecto.Scheduler(plasm)
     sched.execute(niter=1)
-    print gather.outputs.out
+    print(gather.outputs.out)
     assert(gather.outputs.out == 2 *(2*2))
     
 if __name__ == "__main__":

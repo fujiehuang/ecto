@@ -5,12 +5,12 @@ import ecto.ecto_test as ecto_test
 
 for type_name in ecto.Tendril.listT():
     t = ecto.Tendril.createT(type_name)
-    print t.type_name, ' Value (',
+    print(t.type_name, ' Value (', end=' ')
     try:
-        print t.val,
+        print(t.val, end=' ')
     except TypeError as e:
-        print '*NA*',
-    print ')'
+        print('*NA*', end=' ')
+    print(')')
 
 str_t = ecto.Tendril.createT('std::string')
 str_t.val = "foobar"
@@ -22,4 +22,4 @@ try:
     no = ecto.Tendril.createT('doesntexist::Foo')
     assert False and "shouldn't reach here!"
 except ecto.TypeMismatch as e:
-    print "Good, threw:", e
+    print("Good, threw:", e)

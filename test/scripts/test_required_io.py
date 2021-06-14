@@ -29,7 +29,7 @@
 import ecto, sys, util
 import ecto.ecto_test as ecto_test
 
-print ecto_test.RequiredIO.__doc__
+print(ecto_test.RequiredIO.__doc__)
 #test
 assert "out [double] REQUIRED" in ecto_test.RequiredIO.__doc__
 assert "in [double] REQUIRED" in ecto_test.RequiredIO.__doc__
@@ -41,23 +41,23 @@ out = ecto_test.Printer(print_type="double")
 try:
     p = ecto.Plasm()
     p.connect(gen[:] >> req[:])
-    print "checking..."
+    print("checking...")
     p.check()
     util.fail()
-except Exception, e:
-    print str(e)
+except Exception as e:
+    print(str(e))
     assert "NotConnected" in str(e)
-    print e, '(threw as expected)'
+    print(e, '(threw as expected)')
 
 try:
     p = ecto.Plasm()
     p.connect(req[:] >> out [:])
     p.check()
     util.fail()
-except Exception, e:
-    print str(e)
+except Exception as e:
+    print(str(e))
     assert "NotConnected" in str(e)
-    print e, '(threw as expected)'
+    print(e, '(threw as expected)')
 
 
 

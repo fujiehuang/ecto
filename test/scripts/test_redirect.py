@@ -33,7 +33,7 @@ import sys
 fname = "test_redirect.log"
 
 def make(Schedtype):
-    print 'Using :', Schedtype
+    print('Using :', Schedtype)
     plasm = ecto.Plasm()
 
     gen = ecto_test.Generate("Gen", step=1.0, start=0.0)
@@ -47,17 +47,17 @@ def verify():
     f = open(fname)
     txt = f.read()
     lns = len(txt.splitlines())
-    print "txt has", lns, "lines" 
+    print("txt has", lns, "lines") 
     assert len(txt.splitlines()) >= 5
     
 for s in [ecto.Scheduler]:
-    print s, "SYNC"
+    print(s, "SYNC")
     sched = make(s)
     sched.execute(niter=5)
     ecto.unlog_to_file()
     verify()
 
-    print s, "ASYNC"
+    print(s, "ASYNC")
     sched2 = make(s)
     sched2.prepare_jobs(niter=5)
     sched2.run()

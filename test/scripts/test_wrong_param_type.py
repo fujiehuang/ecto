@@ -32,9 +32,9 @@ import ecto.ecto_test as ecto_test
 try:
     gen = ecto_test.Generate(step='Foobar')
     util.fail()
-except ecto.FailedFromPythonConversion, e:
-    print "caught: ", e
-    print "which is exactly what we expected.  Wunderbar."
+except ecto.FailedFromPythonConversion as e:
+    print("caught: ", e)
+    print("which is exactly what we expected.  Wunderbar.")
 except:
     util.fail()
 

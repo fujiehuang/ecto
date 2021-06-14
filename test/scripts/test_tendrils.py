@@ -43,28 +43,28 @@ def test_tendrils():
     try:
         t.declare("Hello","new doc", "you")
         util.fail()
-    except ecto.TendrilRedeclaration, e:
-        print str(e)
+    except ecto.TendrilRedeclaration as e:
+        print(str(e))
         assert('TendrilRedeclaration' in str(e))
     try:
         #read error
         t.nonexistant = 1
         util.fail()
-    except ecto.NonExistant, e:
-        print str(e)
+    except ecto.NonExistant as e:
+        print(str(e))
         assert re.findall("tendril_key.*nonexistant", str(e))
     try:
         #index error
-        print t["nonexistant"]
+        print(t["nonexistant"])
         util.fail()
-    except ecto.NonExistant, e:
-        print str(e)
+    except ecto.NonExistant as e:
+        print(str(e))
         assert re.findall("tendril_key.*nonexistant", str(e))
 
-    assert len(t.keys()) == 2
-    assert len(t.values()) == 2
+    assert len(list(t.keys())) == 2
+    assert len(list(t.values())) == 2
 
-    print t
+    print(t)
     #by value
     _x = t.x
     _x = 10
@@ -81,7 +81,7 @@ def test_tendrils():
     assert t.x == 17
     t.x = 199
     t.x = 15
-    print t.x
+    print(t.x)
     assert t.x == 15
 
 if __name__ == '__main__':

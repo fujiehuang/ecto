@@ -32,32 +32,32 @@ import ecto.ecto_test as ecto_test
 
 try:
     ecto_test.should_throw_in_interpreter_thread()
-except ecto.EctoException, e:
-    print "OK:\n", e
+except ecto.EctoException as e:
+    print(("OK:\n", e))
 except RuntimeError as e:
-    print e
-    print "Not so good -1"
+    print(e)
+    print("Not so good -1")
 
 try:
     ecto_test.should_rethrow_in_interpreter_thread()
-    print "spinlock..."
+    print("spinlock...")
     while True:
         pass
-    print "FAIL that should have thrown"
-except ecto.EctoException, e:
-    print "OK:\n", e
+    print("FAIL that should have thrown")
+except ecto.EctoException as e:
+    print(("OK:\n", e))
 except RuntimeError as e:
-    print e
-    print "Not so good appears in lucid boost 1.40 FIXME"
+    print(e)
+    print("Not so good appears in lucid boost 1.40 FIXME")
 
 try:
     ecto_test.should_rethrow_stdexcept_in_interpreter_thread()
-    print "spinlock..."
+    print("spinlock...")
     while True:
         pass
-    print "FAIL that should have thrown"
-except RuntimeError, e:
-    print "OK:\n", e
+    print("FAIL that should have thrown")
+except RuntimeError as e:
+    print(("OK:\n", e))
 
-print "yay"
+print("yay")
 

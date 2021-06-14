@@ -30,7 +30,7 @@ import ecto
 import ecto.ecto_test as ecto_test
 
 def test_tendril():
-    print "here"
+    print("here")
     tendril = ecto.Tendril()
     tendril.set(5)
     t = ecto.Tendril()
@@ -60,13 +60,13 @@ def test_tendril_defs():
     t2.val = 13
     t2.notify()
     assert t1.val == 13
-    print t1.doc
-    print t1.type_name
-    print t1.val
-    print t1.get()
+    print(t1.doc)
+    print(t1.type_name)
+    print(t1.val)
+    print(t1.get())
     t1.set("foo")
     t1.notify()
-    print t1.val
+    print(t1.val)
     assert t2.val == t1.val
 
 def test_cpp_python_tendril():
@@ -88,12 +88,13 @@ def test_python_serialization():
     y.load(x.save())
     assert y.type_name == 'std::string'
     assert y.val == x.val
-    print y.val
+    print(y.val)
     sy = y.save()
-    print len(sy)
-    print len(y.val)
+    print(sy)
+    print(len(sy))
+    print(len(y.val))
     import binhex
-    print binhex.binascii.hexlify(sy)
+    print(binhex.binascii.hexlify(sy.encode()))
 
 if __name__ == '__main__':
     test_tendril()

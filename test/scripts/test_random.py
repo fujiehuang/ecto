@@ -34,9 +34,9 @@ import sys, time
 plasm = ecto.Plasm()
 
 uni = ecto_test.Uniform01("Random", seed=17)
-print "OUTPUTS:", uni.outputs
+print("OUTPUTS:", uni.outputs)
 printer = ecto_test.Printer("Printy")
-print ecto.version()
+print(ecto.version())
 
 plasm.connect(uni["out"] >> (printer["in"]))
     

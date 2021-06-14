@@ -71,7 +71,7 @@ def run_plasm(options, plasm, locals={}):
     if options.graphviz:
         ecto.view_plasm(plasm)
     if len(options.dotfile) > 0:
-        print >> open(options.dotfile, 'wt'), plasm.viz()
+        print(plasm.viz(), file=open(options.dotfile, 'wt'))
     if len(options.logfile) > 0:
         ecto.log_to_file(options.logfile)
     if options.gui:
@@ -84,7 +84,7 @@ def run_plasm(options, plasm, locals={}):
         else:
             sched.execute(options.niter)
     if options.stats:
-        print(sched.stats())
+        print((sched.stats()))
 
 class CellFactory(object):
     '''A factory for cells that are created from command line args.'''
@@ -103,13 +103,13 @@ class CellFactory(object):
         '''
         params = {}
         prototype = self.cellProtoType
-        for key, value in args.__dict__.iteritems():
+        for key, value in args.__dict__.items():
             if not self.prefix or key.startswith(self.prefix + '_'):
                 if self.prefix:
                     p = ''.join(key.split(self.prefix + '_')[:])
                 else:
                     p = key
-                if p not in prototype.params.keys():
+                if p not in list(prototype.params.keys()):
                     continue
                 t = type(prototype.params[p])
                 if 'values' in t.__dict__ and type(value) != t and type(value) == str:
@@ -199,7 +199,7 @@ def cell_options(parser, CellType, prefix=None):
             dest = x.key()
         tendril_type = type(x.data().val)
         if 'values' in tendril_type.__dict__:
-            choices = tendril_type.names.keys()
+            choices = list(tendril_type.names.keys())
             tendril_type = str
         else:
             choices = None
@@ -313,7 +313,7 @@ if __name__ == '__main__':
     c = const_factory(options)
     m = multiply_factory(options)
     cyaml = CellYamlFactory(c, 'const')
-    print(cyaml.dump())
+    print((cyaml.dump()))
     c = cyaml.load(yaml.load(cyaml.dump()))
     pr = ecto_test.Printer()
     plasm = ecto.Plasm()

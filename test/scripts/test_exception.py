@@ -33,17 +33,17 @@ import ecto, util
 try:
     raise ecto.ValueNone("erp")
 except:
-    print "ok!"
+    print("ok!")
 
 try:
     raise ecto.ValueNone("erp")
 except Exception:
-    print "ok!"
+    print("ok!")
 
 try:
     raise ecto.ValueNone("erp")
 except RuntimeError:
-    print "ok!"
+    print("ok!")
 
 try:
     raise ecto.ValueNone("erp")
@@ -52,5 +52,5 @@ except ecto.TypeMismatch:
 except ecto.ValueRequired:
     util.fail()
 except ecto.ValueNone:
-    print "ok!"
+    print("ok!")
 

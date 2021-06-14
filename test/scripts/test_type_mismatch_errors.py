@@ -49,31 +49,31 @@ def do(E, A):
         p.connect(e[:] >> a[:])
         raise "should have thrown"
 
-    print "connecting, should throw..."
+    print("connecting, should throw...")
     try:
         throw()
         util.fail()
-    except ecto.ValueNone, ex:
+    except ecto.ValueNone as ex:
         util.fail()
-    except ecto.ValueRequired, ex:
+    except ecto.ValueRequired as ex:
         util.fail()
-    except ecto.EctoException, ex:
-        print "CAUGHT! ok!", ex
-        print sys.exc_info()
+    except ecto.EctoException as ex:
+        print("CAUGHT! ok!", ex)
+        print(sys.exc_info())
 
     try:
         throw()
         util.fail()
-    except ecto.TypeMismatch, ex:
-        print "CAUGHT! ok!", ex
-        print sys.exc_info()
+    except ecto.TypeMismatch as ex:
+        print("CAUGHT! ok!", ex)
+        print(sys.exc_info())
 
     try:
         throw()
         util.fail()
-    except RuntimeError, ex:
-        print "okay!", ex
-        print sys.exc_info()
+    except RuntimeError as ex:
+        print("okay!", ex)
+        print(sys.exc_info())
 
 def valnone(A):
     p = ecto.Plasm()
@@ -83,8 +83,8 @@ def valnone(A):
     p.connect(e[:] >> a[:])
     try:
         p.execute(niter=1)
-    except ecto.ValueNone, va:
-        print "yeah, got ValueNone error"
+    except ecto.ValueNone as va:
+        print("yeah, got ValueNone error")
 
 def typeconv(E):
     p = ecto.Plasm()
@@ -94,8 +94,8 @@ def typeconv(E):
     try:
         p.execute(niter=1)
         util.fail()
-    except ecto.TypeMismatch, va:
-        print "yeah, got typeconv error"
+    except ecto.TypeMismatch as va:
+        print("yeah, got typeconv error")
 
 for E in emitters:
     typeconv(E)
@@ -107,7 +107,7 @@ for A in acceptors:
 
 for E in emitters:
     for A in acceptors:
-        print E, A
+        print(E, A)
         do(E, A)
 
 

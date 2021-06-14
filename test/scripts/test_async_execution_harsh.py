@@ -27,10 +27,11 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 import ecto
+import ecto.test
 import ecto.ecto_test as ecto_test
 import sys, time
 
-print "Hardware concurrency is", ecto.hardware_concurrency()
+print(("Hardware concurrency is", ecto.hardware_concurrency()))
 
 def makeplasm():
     plasm = ecto.Plasm()
@@ -45,8 +46,8 @@ def makeplasm():
     return plasm
 
 def invoke(Scheduler, whatnext):
-    print "*"*80
-    print Scheduler, whatnext
+    print(("*"*80))
+    print((Scheduler, whatnext))
     p = makeplasm()
     s = Scheduler(p)
     s.prepare_jobs()
@@ -71,10 +72,10 @@ def nada(s):
 
 def bang(Sched):
     for i in range(ecto.test.iterations):
-        print "executing [%d] %s " %(i, Sched)
+        print(("executing [%d] %s " %(i, Sched)))
         invoke(Sched, nada)
         invoke(Sched, stoponly)
         invoke(Sched, runsome)
         invoke(Sched, runsomethenstop)
 
-map(bang, [ecto.Scheduler])
+list(map(bang, [ecto.Scheduler]))

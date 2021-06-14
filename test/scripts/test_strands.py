@@ -53,9 +53,9 @@ def test_user_defined_strands(nlevels, SchedType, execfn, expect):
     s2 = s1
     s3 = ecto.Strand()
 
-    print "s1.id ==", s1.id
-    print "s2.id ==", s2.id
-    print "s3.id ==", s3.id
+    print("s1.id ==", s1.id)
+    print("s2.id ==", s2.id)
+    print("s3.id ==", s3.id)
     assert s1.id == s2.id
     assert s3.id != s2.id
     assert s3.id != s1.id
@@ -76,11 +76,11 @@ def test_user_defined_strands(nlevels, SchedType, execfn, expect):
     plasm.connect(noncurr[:] >> printer[:])
 
     sched = SchedType(plasm)
-    print "sched=", sched
+    print("sched=", sched)
     execfn(sched)
 
     result = noncurr.outputs.out
-    print "result=", result, "expect=", expect
+    print("result=", result, "expect=", expect)
     assert(result == expect)
 #    execfn(sched)
 #    result = noncurr.outputs.out
@@ -103,11 +103,11 @@ def test_implicit_strands(nlevels, SchedType, execfn, expect):
     plasm.connect(noncurr, "out", printer, "in")
 
     sched = SchedType(plasm)
-    print "sched=", sched
+    print("sched=", sched)
     execfn(sched)
 
     result = noncurr.outputs.out
-    print "result=", result
+    print("result=", result)
     assert(result == expect)
 
 @test
@@ -126,11 +126,11 @@ def shouldfail():
 
     sched = ecto.Scheduler(plasm)
     try:
-        print "about to execute... this should throw"
+        print("about to execute... this should throw")
         sched.execute(niter=4)
         util.fail()
-    except RuntimeError, e:
-        print "good, python caught error", e
+    except RuntimeError as e:
+        print("good, python caught error", e)
 
     sched.stop()
     sched.wait()

@@ -48,5 +48,5 @@ plasm.execute(niter= 0)
 
 # as cnt depends on breaker it will only be processed every second iteration
 result = cnt.outputs.count
-print "Counter ran " + str(result) + " times"
+print(("Counter ran " + str(result) + " times"))
 assert(result == 5)

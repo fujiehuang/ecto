@@ -48,28 +48,28 @@ def test_plasm():
         p2 = ecto.Plasm()
         p2.connect(scatter, "out_0000", gather, "idn_0001")
         util.fail()
-    except ecto.NonExistant, e:
-        print ">>>",e
+    except ecto.NonExistant as e:
+        print(">>>",e)
         assert "'in_0000':type(int) 'in_0001':type(int) 'in_0002':type(int)" in str(e)
-        print "(threw as expected)\n\n"
+        print("(threw as expected)\n\n")
 
     try:
         p2 = ecto.Plasm()
         p2.connect(gather["out"] >> ecto_test.Printer(print_type="double")["in"])
         util.fail("Should not work as there is a type mismatch...")
-    except ecto.TypeMismatch, e:
-        print "type:",type(e)
-        print ">>>",e
+    except ecto.TypeMismatch as e:
+        print("type:",type(e))
+        print(">>>",e)
         assert re.findall("from_typename.*int", str(e))
         assert re.findall("to_typename.*double", str(e))
-        print "(threw as expected)"
+        print("(threw as expected)")
 
     try:
         p2 = ecto.Plasm()
         p2.connect(gather["out"],ecto_test.Printer(print_type="double")["in"])
         util.fail("Should not work.")
-    except RuntimeError, e:
-        print e
+    except RuntimeError as e:
+        print(e)
         assert 'Did you mean' in str(e)
 
     plasm.connect(scatter[:] >> gather[:],
@@ -84,14 +84,14 @@ def test_plasm():
     assert(type(viz) == str)
 
     result1 = gather.outputs.out
-    print result1
+    print(result1)
     assert(result1 == 9) # 3 * 3
     result2 = gather2.outputs.out
-    print result2
+    print(result2)
     assert(result2 == 50) # 5 * 10
 
     l = plasm.connections()
-    print l
+    print(l)
 
     plasm2 = ecto.Plasm()
     plasm2.connect(l)
@@ -113,8 +113,8 @@ def bad_syntax_errors():
                   scatter[:] >> gather2[:]
                   )
         util.fail("Should not work as there is a size mismatch...")
-    except RuntimeError, e:
-        print e
+    except RuntimeError as e:
+        print(e)
 
 if __name__ == '__main__':
     test_plasm()

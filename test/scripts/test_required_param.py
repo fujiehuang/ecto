@@ -26,22 +26,24 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 # 
-import ecto, sys, util
+import ecto
+import sys
+import util
 import ecto.ecto_test as ecto_test
 
 def test_required_param():
     plasm = ecto.Plasm()
-    print "<DOC>", ecto_test.RequiredParam.__doc__, "</DOC>"
+    print("<DOC>", ecto_test.RequiredParam.__doc__, "</DOC>")
     #test
     assert "REQUIRED" in ecto_test.RequiredParam.__doc__
     #test doc default value printing printing
     assert "2.1253" in ecto_test.RequiredParam.__doc__
     try:
         req = ecto_test.RequiredParam("Required")
-        print "egh, didn't throw"
+        print("egh, didn't throw")
         util.fail()
-    except RuntimeError, e:
-        print "Yup, there is our throw:", e
+    except RuntimeError as e:
+        print("Yup, there is our throw:", e)
         
     req = ecto_test.RequiredParam("Required", x=2.2)
     assert req.params.at("x").required == True

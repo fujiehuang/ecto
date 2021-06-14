@@ -51,15 +51,15 @@ def makeplasm(N):
 #    print "\n" * 5
 
 def do_one_st(N):
-    print "multithreaded test w/ quit after", N
+    print("multithreaded test w/ quit after", N)
     (gen, plasm) = makeplasm(N)
 
     sched = ecto.Scheduler(plasm)
     sched.execute(niter=N+100)
 
-    print "singlethreaded: actual out:", gen.outputs.out, " N:", N
+    print("singlethreaded: actual out:", gen.outputs.out, " N:", N)
     assert N == gen.outputs.out
-    print "\n" * 5
+    print("\n" * 5)
 
 for i in range(2,12,2):
     #do_one_mt(7, i)
