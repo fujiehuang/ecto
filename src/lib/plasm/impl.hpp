@@ -29,7 +29,7 @@
 #pragma once
 
 #include <ecto/plasm.hpp>
-#include <boost/tr1/unordered_map.hpp>
+#include <boost/unordered_map.hpp>
 
 #include <ecto/graph/types.hpp>
 
