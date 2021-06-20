@@ -27,7 +27,8 @@
 #
 
 import platform, sys
-from ecto.ecto_main import _cell_base, _cell_cpp, __getitem_list__, __getitem_slice__, __getitem_str__, __getitem_tuple__, lookup
+from ecto.ecto_main import _cell_base, _cell_cpp, __getitem_list__, \
+    __getitem_slice__, __getitem_str__, __getitem_tuple__, lookup
 from . import impl
 
 #import inspect
@@ -48,7 +49,8 @@ def cell_getitem(self, *args, **kwargs):
 def cellinit(cpptype):
     def impl(self, *args, **kwargs):
         if len(args) > 1:
-            raise RuntimeError("Too many positional args:  only one allowed, representing cell instance name")
+            raise RuntimeError("Too many positional args:  only one " \
+                "allowed, representing cell instance name")
         e = lookup(cpptype)
         c = self.__impl = e.construct()
         if len(args) == 1:
@@ -74,7 +76,8 @@ def cellinit(cpptype):
             self.__impl.verify_params()
         except ecto.EctoException as e:
             print(cpptype, file=sys.stderr)
-            raise type(e)('\nCell Type: %s\nCell Name: %s\nWhat:\n%s'%(cpptype,self.__impl.name(),str(e)))
+            raise type(e)('\nCell Type: %s\nCell Name: %s\nWhat:\n%s' % \
+                (cpptype,self.__impl.name(),str(e)))
     # self.params.get('k') = v
     return impl
 
@@ -180,7 +183,8 @@ from ecto.ecto_main import *
 
 #from doc import *
 from ecto.cell import *
-from ecto.blackbox import BlackBox, BlackBoxCellInfo, BlackBoxError, BlackBoxForward
+from ecto.blackbox import BlackBox, BlackBoxCellInfo, BlackBoxError, \
+    BlackBoxForward
 from ecto.schedulers import MultiPlasmScheduler
 #import test
 
