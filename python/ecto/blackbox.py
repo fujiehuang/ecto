@@ -216,6 +216,17 @@ def _copy_tendrils_to_tendrils(tendrils_from, forwards, tendrils_to):
             if new_default is not None:
                 tendrils_to.at(new_key).set(new_default)
 
+def is_class_method(self, func):
+    if "__self__" not in dir(func):
+        return False
+    return func.__self__ == self.__class__
+
+def is_static_method(func):
+    if "__self__" in dir(func):
+        return False
+    return "__class__" in dir(func)
+
+
 class BlackBox(object):
     """
     The BlackBox may be used as an encapsulation idiom within ecto, to declare reusable plasms.
@@ -235,17 +246,16 @@ class BlackBox(object):
         :param kwargs: any parameter that is a declared parameter or a forwarded one
         """
         # check that the overrides have proper types
-        # declare_direct_params has to be a classmethod or a staticmethod (as declare_params uses it and it's a
-        # classmethod)
-        for func in [self.__class__.declare_cells, self.__class__.declare_direct_params,
-                     self.__class__.declare_forwards]:
-            if type(func) != types.FunctionType:
-                if type(func) != types.MethodType:
-                    raise BlackBoxError('The "%s" member of the BlackBox %s ' % (func.__name__,
-                                        self.__class__.__name__) + 'is not a function.')
-                if func.__self__ is None:
-                    raise BlackBoxError('The "%s" function of the BlackBox %s '  % (func.__name__,
-                                self.__class__.__name__) + 'needs to be decorated with @classmethod or @staticmethod.')
+        # declare_direct_params has to be a classmethod or a staticmethod 
+        # (as declare_params uses it and it's a classmethod)
+
+        if not is_class_method(self, self.declare_cells):
+            raise BlackBoxError("'declare_cells' should be @classmethod")
+        if not is_class_method(self, self.declare_forwards):
+            raise BlackBoxError("'declare_forwards' should be @classmethod")
+        if not is_static_method(self.declare_direct_params):
+            raise BlackBoxError("'declare_direct_params' should be " \
+                "@staticmethod")
 
         self.niter = kwargs.get('niter', 1)
         self.__impl = None
