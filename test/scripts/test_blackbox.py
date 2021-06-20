@@ -32,7 +32,7 @@ from util import fail
 from ecto import BlackBoxCellInfo as CellInfo, BlackBoxForward as Forward
 
 class MyBlackBox(ecto.BlackBox):
-    ''' A simple black box that doesn't really do anything.
+    ''' A simple black box that does not really do anything.
     '''
 
     @classmethod
@@ -41,8 +41,8 @@ class MyBlackBox(ecto.BlackBox):
                 'inc': CellInfo(python_class=ecto_test.Increment)
                }
 
-    @classmethod
-    def declare_direct_params(cls, p, **kwargs):
+    @staticmethod
+    def declare_direct_params(p, **kwargs):
         p.declare("fail", "Should i fail or should i go.", False)
 
     @classmethod
@@ -175,48 +175,62 @@ def test_bb2(options):
 
 class MyBlackBox3(ecto.BlackBox):
     pass
+
 class MyBlackBox4(ecto.BlackBox):
     def connections(self, p):
         return []
+
 class MyBlackBox5(ecto.BlackBox):
     def declare_cells(self, p):
         return {'gen': CellInfo(python_class=ecto_test.Generate),
                 'inc': CellInfo(python_class=ecto_test.Increment)}
+
     @classmethod
     def declare_direct_params(cls, p, **kwargs):
         p.declare("fail", "Should i fail or should i go.", False)
+
     @classmethod
     def declare_forwards(cls, params):
         return ({},{},{})
+
     def connections(self, p):
         return [self.gen["out"] >> self.inc["in"]]
+
 class MyBlackBox6(ecto.BlackBox):
     @classmethod
     def declare_cells(cls, p):
         return {'gen': CellInfo(python_class=ecto_test.Generate),
                 'inc': CellInfo(python_class=ecto_test.Increment)}
+
     def declare_direct_params(self, p, **kwargs):
         p.declare("fail", "Should i fail or should i go.", False)
+
     @classmethod
     def declare_forwards(cls, params):
         return ({},{},{})
+
     def connections(self, p):
         return [self.gen["out"] >> self.inc["in"]]
+
 class MyBlackBox7(ecto.BlackBox):
     @classmethod
     def declare_cells(cls, p):
         return {'gen': CellInfo(python_class=ecto_test.Generate),
                 'inc': CellInfo(python_class=ecto_test.Increment)}
+
     @classmethod
     def declare_direct_params(cls, p, **kwargs):
         p.declare("fail", "Should i fail or should i go.", False)
+
     def declare_forwards(self, params):
         return ({},{},{})
+
     def connections(self, p):
         return [self.gen["out"] >> self.inc["in"]]
 
 def test_bb_static():
-    for BB in [MyBlackBox3, MyBlackBox4, MyBlackBox5, MyBlackBox6, MyBlackBox7]:
+    clses = [MyBlackBox3, MyBlackBox4, MyBlackBox5, MyBlackBox6, MyBlackBox7]
+    for BB in clses:
         try:
             mm = BB("MaMaMa")
             fail()
@@ -236,5 +250,5 @@ if __name__ == '__main__':
     test_bb(options)
     test_bb_fail(options)
     test_bb_static()
-
+    
     test_bb2(options)
